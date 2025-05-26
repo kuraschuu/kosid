@@ -188,29 +188,31 @@
       card.classList.toggle("flipped");
     }
 
-    function downloadCard() {
-      html2canvas(card).then(canvas => {
-        const link = document.createElement("a");
-        link.download = "kingdom-of-science-id.png";
-        link.href = canvas.toDataURL();
-        link.click();
-      });
-    }
+  function downloadCard() {
+  const card = document.querySelector('.card');
+  const frontSide = card.querySelector('.card-front');
 
-    const photoInput = document.getElementById("photoInput");
-    const photoPreview = document.getElementById("photoPreview");
+  const clone = frontSide.cloneNode(true);
 
-    photoInput.addEventListener("change", function () {
-      const file = photoInput.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = function (e) {
-          photoPreview.src = e.target.result;
-          photoPreview.style.display = "block";
-        };
-        reader.readAsDataURL(file);
-      }
-    });
+  clone.style.position = 'fixed';
+  clone.style.top = '-9999px';
+  clone.style.left = '-9999px';
+  clone.style.transform = 'none';
+  clone.style.backfaceVisibility = 'visible';
+  clone.style.zIndex = '1000';
+
+  document.body.appendChild(clone);
+
+  html2canvas(clone, { scale: 2 }).then(canvas => {
+    const link = document.createElement('a');
+    link.download = 'kingdom-of-science-id.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+
+    document.body.removeChild(clone);
+  });
+}
+
   </script>
    				
 				</div>
