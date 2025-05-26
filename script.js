@@ -23,6 +23,13 @@ document.getElementById('photoInput').addEventListener('change', function (event
 // Download card as PNG
 document.getElementById('downloadBtn').addEventListener('click', () => {
   const card = document.querySelector('.card');
+  const wasFlipped = card.classList.contains('flipped');
+
+  // Temporarily show the front side if flipped
+  if (wasFlipped) {
+    card.classList.remove('flipped');
+  }
+
   const frontSide = card.querySelector('.card-front');
   const clone = frontSide.cloneNode(true);
 
@@ -33,7 +40,7 @@ document.getElementById('downloadBtn').addEventListener('click', () => {
   clone.style.backfaceVisibility = 'visible';
   clone.style.zIndex = '1000';
 
-  // Replace input fields with spans
+  // Replace inputs with spans
   const inputs = clone.querySelectorAll('input');
   inputs.forEach(input => {
     const span = document.createElement('span');
@@ -49,7 +56,7 @@ document.getElementById('downloadBtn').addEventListener('click', () => {
     input.parentNode.replaceChild(span, input);
   });
 
-  // Preserve uploaded image
+  // Keep uploaded image
   const photo = clone.querySelector('#photoPreview');
   if (photo && photo.src && photo.style.display !== 'none') {
     photo.style.display = 'block';
@@ -70,5 +77,10 @@ document.getElementById('downloadBtn').addEventListener('click', () => {
     link.href = canvas.toDataURL('image/png');
     link.click();
     document.body.removeChild(clone);
+
+    // Restore card flip state
+    if (wasFlipped) {
+      card.classList.add('flipped');
+    }
   });
 });
