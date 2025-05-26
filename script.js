@@ -5,7 +5,7 @@ document.getElementById('flipBtn').addEventListener('click', () => {
   document.querySelector('.card').classList.toggle('flipped');
 });
 
-// Handle photo upload and preview
+// Photo upload
 document.getElementById('photoInput').addEventListener('change', function (event) {
   const file = event.target.files[0];
   if (!file) return;
@@ -20,15 +20,12 @@ document.getElementById('photoInput').addEventListener('change', function (event
   reader.readAsDataURL(file);
 });
 
-// Generate PNG of card
+// Download card as PNG
 document.getElementById('downloadBtn').addEventListener('click', () => {
   const card = document.querySelector('.card');
   const frontSide = card.querySelector('.card-front');
-
-  // Clone the front side element
   const clone = frontSide.cloneNode(true);
 
-  // Style the clone so it's visible and positioned offscreen
   clone.style.position = 'fixed';
   clone.style.top = '-9999px';
   clone.style.left = '-9999px';
@@ -36,17 +33,42 @@ document.getElementById('downloadBtn').addEventListener('click', () => {
   clone.style.backfaceVisibility = 'visible';
   clone.style.zIndex = '1000';
 
-  // Append clone to body
+  // Replace input fields with spans
+  const inputs = clone.querySelectorAll('input');
+  inputs.forEach(input => {
+    const span = document.createElement('span');
+    span.textContent = input.value || input.placeholder;
+    span.style.display = 'inline-block';
+    span.style.width = input.offsetWidth + 'px';
+    span.style.height = input.offsetHeight + 'px';
+    span.style.borderBottom = getComputedStyle(input).borderBottom;
+    span.style.fontFamily = getComputedStyle(input).fontFamily;
+    span.style.fontSize = getComputedStyle(input).fontSize;
+    span.style.color = getComputedStyle(input).color;
+    span.style.lineHeight = input.offsetHeight + 'px';
+    input.parentNode.replaceChild(span, input);
+  });
+
+  // Preserve uploaded image
+  const photo = clone.querySelector('#photoPreview');
+  if (photo && photo.src && photo.style.display !== 'none') {
+    photo.style.display = 'block';
+    const placeholder = clone.querySelector('#photoPlaceholder');
+    if (placeholder) placeholder.style.display = 'none';
+  }
+
   document.body.appendChild(clone);
 
-  // Use html2canvas to capture the clone
-  html2canvas(clone, { scale: 2 }).then(canvas => {
+  html2canvas(clone, {
+    scale: 2,
+    useCORS: true,
+    allowTaint: true,
+    backgroundColor: null
+  }).then(canvas => {
     const link = document.createElement('a');
     link.download = 'kingdom-of-science-id.png';
     link.href = canvas.toDataURL('image/png');
     link.click();
-
-    // Remove the clone from the DOM after capture
     document.body.removeChild(clone);
   });
 });
