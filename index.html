@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kingdom of Science ID</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <div class="container">
+    <div class="card" id="id-card">
+      <div class="card-face front">
+        <img src="assets/id-card-front.PNG" alt="Front of ID"/>
+        <div class="info-overlay">
+          <div class="photo-frame" id="photo-frame">
+            <img id="uploaded-photo" src="" alt="Your Photo" />
+          </div>
+          <p id="username-display">Username</p>
+          <p id="settlement-display">Settlement</p>
+          <p id="character-display">Favorite Character</p>
+          <p id="date-display">Date Issued</p>
+        </div>
+      </div>
+      <div class="card-face back">
+        <img src="assets/id-card back.PNG" alt="Back of ID"/>
+      </div>
+    </div>
+
+    <button id="flip-btn">Flip Card</button>
+
+    <form id="info-form">
+      <input type="text" id="username" placeholder="Username"/>
+      <input type="text" id="settlement" placeholder="Settlement"/>
+      <input type="text" id="character" placeholder="Favorite Character"/>
+      <input type="date" id="date"/>
+      <input type="file" id="photo-upload" accept="image/*"/>
+      <button type="submit">Update ID</button>
+    </form>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
