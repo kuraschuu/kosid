@@ -24,36 +24,29 @@ document.getElementById('photoInput').addEventListener('change', function (event
 document.getElementById('downloadBtn').addEventListener('click', () => {
   const card = document.querySelector('.card');
   const frontSide = card.querySelector('.card-front');
-  const backSide = card.querySelector('.card-back');
 
-  const wasFlipped = card.classList.contains('flipped');
+  // Clone the front side element
+  const clone = frontSide.cloneNode(true);
 
-  // Temporarily unflip card and hide back side for clear capture
-  if (wasFlipped) card.classList.remove('flipped');
+  // Style the clone so it's visible and positioned offscreen
+  clone.style.position = 'fixed';
+  clone.style.top = '-9999px';
+  clone.style.left = '-9999px';
+  clone.style.transform = 'none';
+  clone.style.backfaceVisibility = 'visible';
+  clone.style.zIndex = '1000';
 
-  backSide.style.visibility = 'hidden';
+  // Append clone to body
+  document.body.appendChild(clone);
 
-  // Ensure front side styles for proper rendering
-  frontSide.style.transform = 'none';
-  frontSide.style.backfaceVisibility = 'visible';
-  frontSide.style.position = 'relative';
-  frontSide.style.zIndex = 10;
+  // Use html2canvas to capture the clone
+  html2canvas(clone, { scale: 2 }).then(canvas => {
+    const link = document.createElement('a');
+    link.download = 'kingdom-of-science-id.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
 
-  setTimeout(() => {
-    html2canvas(frontSide, { scale: 2 }).then(canvas => {
-      const link = document.createElement('a');
-      link.download = 'kingdom-of-science-id.png';
-      link.href = canvas.toDataURL('image/png');
-      link.click();
-
-      // Restore previous states and styles
-      if (wasFlipped) card.classList.add('flipped');
-      backSide.style.visibility = 'visible';
-
-      frontSide.style.transform = '';
-      frontSide.style.backfaceVisibility = '';
-      frontSide.style.position = '';
-      frontSide.style.zIndex = '';
-    });
-  }, 200);
+    // Remove the clone from the DOM after capture
+    document.body.removeChild(clone);
+  });
 });
