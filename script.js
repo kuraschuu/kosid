@@ -28,12 +28,12 @@ document.getElementById('downloadBtn').addEventListener('click', () => {
 
   const wasFlipped = card.classList.contains('flipped');
 
-  // Temporarily unflip card and fix styles for capture
+  // Temporarily unflip card and hide back side for clear capture
   if (wasFlipped) card.classList.remove('flipped');
 
   backSide.style.visibility = 'hidden';
 
-  // Fix front side styles to ensure visibility
+  // Ensure front side styles for proper rendering
   frontSide.style.transform = 'none';
   frontSide.style.backfaceVisibility = 'visible';
   frontSide.style.position = 'relative';
@@ -46,7 +46,7 @@ document.getElementById('downloadBtn').addEventListener('click', () => {
       link.href = canvas.toDataURL('image/png');
       link.click();
 
-      // Restore styles
+      // Restore previous states and styles
       if (wasFlipped) card.classList.add('flipped');
       backSide.style.visibility = 'visible';
 
