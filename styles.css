@@ -76,10 +76,17 @@ body {
   font-size: 1rem;
   outline: none;
 }
-.inputs span {
-  border-bottom: 1px solid #f0e9ca;
-  width: 200px;
+/* Add this to help cloned spans match inputs */
+.input-fields span {
+  background: transparent;
+  color: #f5f5dc;
+  font-size: 1rem;
+  display: inline-block;
+  border-bottom: 1px solid #f5f5dc;
+  padding: 6px 4px;
+  font-family: 'Cinzel', serif;
 }
+
 
 
 .photo-box {
