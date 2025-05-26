@@ -154,46 +154,47 @@
 <body>
   <div class="card-container">
     <div class="card" id="idCard">
-      <div class="card-side card-front">
-        <div class="photo-box" id="photoBox">
-          <img id="photoPreview" style="display:none;" />
-          <input type="file" id="photoInput" accept="image/*" />
-        </div>
-        <div class="inputs">
-          <label>USERNAME</label>
-          <input type="text" id="username" placeholder="Enter name"/>
-          <label>DATE ISSUED</label>
-          <input type="text" id="dateIssued" placeholder="DD/MM/YY"/>
-          <label>SETTLEMENT</label>
-          <input type="text" id="settlement" placeholder="Enter settlement"/>
-          <label>FAV CHARACTER</label>
-          <input type="text" id="favCharacter" placeholder="Enter character"/>
-        </div>
+     <div class="card-side card-front">
+  <div class="photo-box" id="photoBox">
+    <img id="photoPreview" style="display:none;" />
+    <input type="file" id="photoInput" accept="image/*" />
+  </div>
+</div>
+
+       <div class="form-inputs" style="margin-top: 20px;">
+  <label>Username:</label>
+  <input type="text" id="username" placeholder="Enter name"/><br/>
+
+  <label>Date Issued:</label>
+  <input type="text" id="dateIssued" placeholder="DD/MM/YY"/><br/>
+
+  <label>Settlement:</label>
+  <input type="text" id="settlement" placeholder="Enter settlement"/><br/>
+
+  <label>Favorite Character:</label>
+  <input type="text" id="favCharacter" placeholder="Enter character"/>
+</div>
+
       </div>
       <div class="card-side card-back"></div>
     </div>
   </div>
 <!-- Hidden clean render version -->
-<div id="cardRender" style="display: none">
-  <div class="card-front" style="transform: none">
-    <div class="header">
-      <h1>KINGDOM OF SCIENCE</h1>
-      <img src="logo.png" class="logo" />
+<div id="cardRender" style="display: none;">
+  <div class="card-side card-front" style="background-image: url('assets/id-card-front.PNG'); width: 600px; height: 350px; position: relative;">
+    <div class="photo-box" style="position: absolute; top: 70px; left: 40px; width: 170px; height: 200px; border: 2px solid #dcd2b8;">
+      <img id="renderPhoto" src="" style="width: 100%; height: 100%; object-fit: cover;" />
     </div>
-    <div class="content">
-      <div class="photo-box">
-        <img id="renderPhoto" src="" alt="Photo" />
-      </div>
-      <div class="info">
-        <div><strong>USERNAME</strong><br><span id="renderUsername"></span></div>
-        <div><strong>DATE ISSUED</strong><br><span id="renderDate"></span></div>
-        <div><strong>SETTLEMENT</strong><br><span id="renderSettlement"></span></div>
-        <div><strong>FAV CHARACTER</strong><br><span id="renderCharacter"></span></div>
-      </div>
+    <div style="position: absolute; top: 70px; left: 230px; color: #f0e9ca; font-size: 14px;">
+      <div><strong>USERNAME</strong><br><span id="renderUsername"></span></div><br/>
+      <div><strong>DATE ISSUED</strong><br><span id="renderDate"></span></div><br/>
+      <div><strong>SETTLEMENT</strong><br><span id="renderSettlement"></span></div><br/>
+      <div><strong>FAV CHARACTER</strong><br><span id="renderCharacter"></span></div>
     </div>
-    <div class="barcode">KOS-944198</div>
+    <div class="barcode" style="position: absolute; bottom: 10px; right: 20px; color: white;">KOS-944198</div>
   </div>
 </div>
+
 
   <div class="controls">
     <button onclick="flipCard()">Flip Card</button>
