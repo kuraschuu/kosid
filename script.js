@@ -24,9 +24,20 @@ document.getElementById('photoInput').addEventListener('change', function (event
 document.getElementById('downloadBtn').addEventListener('click', () => {
   const card = document.querySelector('.card');
   const frontSide = card.querySelector('.card-front');
+  const backSide = card.querySelector('.card-back');
 
   const wasFlipped = card.classList.contains('flipped');
+
+  // Temporarily unflip card and fix styles for capture
   if (wasFlipped) card.classList.remove('flipped');
+
+  backSide.style.visibility = 'hidden';
+
+  // Fix front side styles to ensure visibility
+  frontSide.style.transform = 'none';
+  frontSide.style.backfaceVisibility = 'visible';
+  frontSide.style.position = 'relative';
+  frontSide.style.zIndex = 10;
 
   setTimeout(() => {
     html2canvas(frontSide, { scale: 2 }).then(canvas => {
@@ -35,7 +46,14 @@ document.getElementById('downloadBtn').addEventListener('click', () => {
       link.href = canvas.toDataURL('image/png');
       link.click();
 
+      // Restore styles
       if (wasFlipped) card.classList.add('flipped');
+      backSide.style.visibility = 'visible';
+
+      frontSide.style.transform = '';
+      frontSide.style.backfaceVisibility = '';
+      frontSide.style.position = '';
+      frontSide.style.zIndex = '';
     });
-  }, 200); // 200ms delay to let browser repaint front side
+  }, 200);
 });
