@@ -173,6 +173,27 @@
       <div class="card-side card-back"></div>
     </div>
   </div>
+<!-- Hidden clean render version -->
+<div id="cardRender" style="display: none">
+  <div class="card-front" style="transform: none">
+    <div class="header">
+      <h1>KINGDOM OF SCIENCE</h1>
+      <img src="logo.png" class="logo" />
+    </div>
+    <div class="content">
+      <div class="photo-box">
+        <img id="renderPhoto" src="" alt="Photo" />
+      </div>
+      <div class="info">
+        <div><strong>USERNAME</strong><br><span id="renderUsername"></span></div>
+        <div><strong>DATE ISSUED</strong><br><span id="renderDate"></span></div>
+        <div><strong>SETTLEMENT</strong><br><span id="renderSettlement"></span></div>
+        <div><strong>FAV CHARACTER</strong><br><span id="renderCharacter"></span></div>
+      </div>
+    </div>
+    <div class="barcode">KOS-944198</div>
+  </div>
+</div>
 
   <div class="controls">
     <button onclick="flipCard()">Flip Card</button>
@@ -188,51 +209,30 @@
       card.classList.toggle("flipped");
     }
 
-  function downloadCard() {
-  const card = document.getElementById('idCard');
-  const frontSide = card.querySelector('.card-front');
+function downloadCard() {
+  // Set values in the render version
+  document.getElementById("renderUsername").innerText = document.getElementById("username").value || "Enter name";
+  document.getElementById("renderDate").innerText = document.getElementById("dateIssued").value || "DD/MM/YY";
+  document.getElementById("renderSettlement").innerText = document.getElementById("settlement").value || "Enter settlement";
+  document.getElementById("renderCharacter").innerText = document.getElementById("favCharacter").value || "Enter character";
 
-  // Clone the front side to capture only that
-  const clone = frontSide.cloneNode(true);
-
-  // Remove inputs and replace them with their values
-  const inputs = clone.querySelectorAll('input');
-  inputs.forEach(input => {
-    const span = document.createElement('span');
-    span.textContent = input.value || input.placeholder;
-    span.style.display = 'block';
-    span.style.marginBottom = '10px';
-    span.style.color = '#f0e9ca';
-    span.style.fontSize = '14px';
-    input.parentNode.replaceChild(span, input);
-  });
-
-  // Show image if preview is present
-  const photo = document.getElementById('photoPreview');
-  const photoClone = clone.querySelector('#photoPreview');
-  if (photo.src) {
-    photoClone.src = photo.src;
-    photoClone.style.display = 'block';
+  const photoSrc = document.getElementById("photoPreview").src;
+  if (photoSrc) {
+    document.getElementById("renderPhoto").src = photoSrc;
   }
 
-  // Style for capture
-  clone.style.position = 'fixed';
-  clone.style.top = '-9999px';
-  clone.style.left = '-9999px';
-  clone.style.transform = 'none';
-  clone.style.backfaceVisibility = 'visible';
-  clone.style.zIndex = '9999';
+  const renderCard = document.getElementById("cardRender");
+  renderCard.style.display = "block";
 
-  document.body.appendChild(clone);
-
-  html2canvas(clone, { scale: 2 }).then(canvas => {
-    const link = document.createElement('a');
-    link.download = 'kingdom-of-science-id.png';
+  html2canvas(renderCard, { scale: 2 }).then(canvas => {
+    const link = document.createElement("a");
+    link.download = "kingdom-of-science-id.png";
     link.href = canvas.toDataURL();
     link.click();
-    document.body.removeChild(clone);
+    renderCard.style.display = "none";
   });
 }
+
 
     const photoInput = document.getElementById("photoInput");
     const photoPreview = document.getElementById("photoPreview");
