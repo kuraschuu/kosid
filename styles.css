@@ -76,6 +76,11 @@ body {
   font-size: 1rem;
   outline: none;
 }
+.inputs span {
+  border-bottom: 1px solid #f0e9ca;
+  width: 200px;
+}
+
 
 .photo-box {
   width: 240px;
