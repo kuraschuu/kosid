@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kingdom of Science ID Generator</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Cinzel', serif;
+    }
+
+    body {
+      background-color: #e7ecf2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    .card-container {
+      width: 600px;
+      height: 350px;
+      perspective: 1000px;
+      margin-bottom: 20px;
+    }
+
+    .card {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transition: transform 0.8s;
+      transform-style: preserve-3d;
+    }
+
+    .card.flipped {
+      transform: rotateY(180deg);
+    }
+
+    .card-side {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+    }
+
+    .card-front,
+    .card-back {
+      background-size: cover;
+      background-position: center;
+    }
+
+    .card-front {
+      background-image: url("assets/id-card-front.PNG"); /* Upload this image to your project folder */
+    }
+
+    .card-back {
+      background-image: url("assets/id-card back.PNG"); /* Upload this image to your project folder */
+      transform: rotateY(180deg);
+    }
+
+    .inputs {
+      position: absolute;
+      top: 70px;
+      left: 230px;
+      color: #f0e9ca;
+      display: flex;
+      flex-direction: column;
+      font-size: 14px;
+      gap: 10px;
+    }
+
+    .inputs label {
+      font-weight: bold;
+    }
+
+    .inputs input {
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid #f0e9ca;
+      color: #f0e9ca;
+      outline: none;
+      width: 200px;
+    }
+
+    .photo-box {
+      position: absolute;
+      top: 70px;
+      left: 40px;
+      width: 170px;
+      height: 200px;
+      border: 2px solid #dcd2b8;
+      background-color: rgba(255,255,255,0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .photo-box img {
+      max-width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .controls {
+      display: flex;
+      gap: 40px;
+      margin-top: 20px;
+    }
+
+    .controls button {
+      background: none;
+      border: none;
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .controls button:hover {
+      text-decoration: underline;
+    }
+
+    input[type="file"] {
+      position: absolute;
+      opacity: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+    }
+
+    .photo-box label {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      color: #aaa;
+      text-align: center;
+      line-height: 200px;
+      font-size: 16px;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="card-container">
+    <div class="card" id="idCard">
+      <div class="card-side card-front">
+        <div class="photo-box" id="photoBox">
+          <img id="photoPreview" style="display:none;" />
+          <label for="photoInput">SELECT PHOTO</label>
+          <input type="file" id="photoInput" accept="image/*" />
+        </div>
+        <div class="inputs">
+          <label>USERNAME</label>
+          <input type="text" id="username" placeholder="Enter name"/>
+          <label>DATE ISSUED</label>
+          <input type="text" id="dateIssued" placeholder="DD/MM/YY"/>
+          <label>SETTLEMENT</label>
+          <input type="text" id="settlement" placeholder="Enter settlement"/>
+          <label>FAV CHARACTER</label>
+          <input type="text" id="favCharacter" placeholder="Enter character"/>
+        </div>
+      </div>
+      <div class="card-side card-back"></div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button onclick="flipCard()">🔄 Flip Card</button>
+    <button onclick="downloadCard()">⬇️ Download PNG</button>
+  </div>
+
+  <!-- html2canvas library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script>
+    const card = document.getElementById("idCard");
+
+    function flipCard() {
+      card.classList.toggle("flipped");
+    }
+
+    function downloadCard() {
+      html2canvas(card).then(canvas => {
+        const link = document.createElement("a");
+        link.download = "kingdom-of-science-id.png";
+        link.href = canvas.toDataURL();
+        link.click();
+      });
+    }
+
+    const photoInput = document.getElementById("photoInput");
+    const photoPreview = document.getElementById("photoPreview");
+
+    photoInput.addEventListener("change", function () {
+      const file = photoInput.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          photoPreview.src = e.target.result;
+          photoPreview.style.display = "block";
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  </script>
+</body>
+</html>
