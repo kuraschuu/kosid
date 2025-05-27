@@ -8,12 +8,12 @@ body {
   align-items: center;
   height: 100vh;
   margin: 0;
+  padding: 0;
 }
 
 .card-container {
   width: 100%;
   max-width: 600px;
-  height: auto;
   aspect-ratio: 16 / 9;
   perspective: 1000px;
   margin-bottom: 20px;
@@ -56,6 +56,7 @@ body {
   background-image: url('assets/id-card back.PNG');
   transform: rotateY(180deg);
 }
+
 .card-side {
   position: absolute;
   width: 100%;
@@ -63,35 +64,38 @@ body {
   backface-visibility: hidden;
   border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
   background-size: cover;
   background-position: center;
 }
+
 /* Form Overlay Styling */
 .inputs {
   position: absolute;
-  top: 15%;             /* Adjust as needed to align inputs on card */
+  top: 15%;
   left: 40%;
   width: 50%;
   display: flex;
   flex-direction: column;
   gap: 10px;
   color: #f0e9ca;
-  font-size: 0.9vw;
+  font-size: 1rem;
   font-family: 'Cinzel', serif;
   z-index: 2;
+  max-height: 60%;
+  overflow: auto;
 }
+
 .inputs input {
   background: transparent;
   border: none;
   border-bottom: 1px solid #f5f5dc;
   color: #f5f5dc;
   padding: 4px 2px;
-  font-size: 0.9em;
+  font-size: 1rem;
   outline: none;
   width: 100%;
 }
-
 
 .input-fields {
   display: flex;
@@ -116,7 +120,7 @@ body {
   font-size: 1rem;
   outline: none;
 }
-/* Add this to help cloned spans match inputs */
+
 .input-fields span {
   background: transparent;
   color: #f5f5dc;
@@ -131,7 +135,6 @@ body {
   display: none !important;
 }
 
-
 .photo-box {
   position: absolute;
   top: 12%;
@@ -139,23 +142,25 @@ body {
   width: 28%;
   height: 60%;
   border: 2px solid #dcd2b8;
-  background-color: rgba(255,255,255,0.05);
+  background-color: rgba(255, 255, 255, 0.05);
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
 }
-.photo-box img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+
+.photo-box img,
 #photoPreview {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+#photoPreview {
   display: none;
 }
+
+/* Responsive layout */
 @media (max-width: 600px) {
   body {
     flex-direction: column;
@@ -165,35 +170,38 @@ body {
 
   .card-container {
     width: 100%;
-    height: auto;
     aspect-ratio: 16 / 9;
     margin-bottom: 20px;
   }
 
   .card-front {
-    flex-direction: column;
+    flex-direction: row; /* Keep row layout to preserve alignment */
     padding: 16px;
     gap: 12px;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: space-between;
     background-size: cover;
     background-position: center;
   }
 
   .photo-box {
-    position: static;
-    width: 80%;
-    aspect-ratio: 3 / 4;
-    height: auto;
-    margin-bottom: 10px;
+    /* Keep position absolute so it stays in place over card */
+    top: 12%;
+    left: 6%;
+    width: 28%;
+    height: 60%;
   }
+
   .inputs {
     top: 18%;
     left: 38%;
     width: 55%;
-    font-size: 2.8vw;  /* Scale relative to screen */
+    font-size: 1rem; /* use rem for consistent sizing */
+    max-height: 60%;
+    overflow: auto;
   }
-   .inputs input {
+
+  .inputs input {
     font-size: 1rem;
     padding: 6px 4px;
   }
@@ -229,3 +237,4 @@ body {
   .controls button {
     font-size: 16px;
   }
+}
