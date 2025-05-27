@@ -69,16 +69,17 @@ body {
 }
 /* Form Overlay Styling */
 .inputs {
-  position: absolute;
-  top: 12%;
-  left: 40%;
-  right: 5%;
+  position: relative;  /* Changed from absolute */
+  margin-left: 35%;    /* Roughly same spacing but flexible */
+  margin-right: 5%;
   color: #f0e9ca;
   display: flex;
   flex-direction: column;
-  font-size: 1vw;
-  gap: 0.8vw;
+  font-size: 1rem;
+  gap: 10px;
+  max-width: 60%;
 }
+
 .inputs input {
   font-size: 0.9em;
   padding: 2px;
@@ -149,18 +150,36 @@ body {
 }
 @media (max-width: 600px) {
   .inputs {
+    margin-left: 0;
+    max-width: 100%;
     font-size: 3vw;
-    left: 38%;
-    right: 5%;
-    gap: 2vw;
+    padding: 10px;
+    position: static;  /* make it part of normal flow */
+  }
+
+  .input-fields {
+    width: 100%;
   }
 
   .photo-box {
-    top: 14%;
-    left: 6%;
-    width: 35%;
-    height: 55%;
+    width: 100%;
+    height: auto;
+    position: relative;
+    top: auto;
+    left: auto;
   }
+}
+@media (max-width: 600px) {
+  .card-container {
+    height: 350px; /* or whatever looks good */
+  }
+}
+@media (max-width: 600px) {
+  .card-front {
+    padding: 20px;
+  }
+}
+
 
   .controls {
     flex-direction: column;
