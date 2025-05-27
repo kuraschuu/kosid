@@ -149,78 +149,6 @@ body {
   display: none;
 }
 @media (max-width: 600px) {
-  .inputs {
-    margin-left: 0;
-    max-width: 100%;
-    font-size: 3vw;
-    padding: 10px;
-    position: static;  /* make it part of normal flow */
-  }
-
-  .input-fields {
-    width: 100%;
-  }
-
-  .photo-box {
-    width: 100%;
-    height: auto;
-    position: relative;
-    top: auto;
-    left: auto;
-  }
-}
-@media (max-width: 600px) {
-  .card-container {
-    height: 350px; /* or whatever looks good */
-  }
-}
-@media (max-width: 600px) {
-  .card-front {
-    padding: 20px;
-  }
-}
-
-
-  .controls {
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    text-align: center;
-  }
-
-  .controls button {
-    font-size: 16px;
-  }
-}
-
-/* Buttons below the card */
-.buttons {
-  display: flex;
-  justify-content: center;
-  gap: 30px;
-  margin-top: 20px;
-}
-
-button {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background-color: #1d1f23;
-  color: #f5f5dc;
-  border: none;
-  padding: 12px 18px;
-  font-size: 1rem;
-  cursor: pointer;
-  border-radius: 8px;
-  box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
-}
-
-button:hover {
-  background-color: #2c2f34;
-}
- 
-}
-@media (max-width: 600px) {
   body {
     flex-direction: column;
     padding: 20px 10px;
@@ -261,6 +189,7 @@ button:hover {
     gap: 12px;
     font-size: 4vw;
     padding: 0 10px;
+    color: #f5f5dc;
   }
 
   .inputs input {
@@ -282,6 +211,8 @@ button:hover {
   .buttons {
     flex-direction: column;
     gap: 15px;
+    width: 100%;
+    align-items: center;
   }
 
   button {
