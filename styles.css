@@ -224,7 +224,6 @@ button:hover {
   body {
     flex-direction: column;
     padding: 20px 10px;
-    align-items: stretch;
     height: auto;
   }
 
@@ -237,29 +236,31 @@ button:hover {
 
   .card-front {
     flex-direction: column;
-    padding: 20px;
+    padding: 16px;
+    gap: 12px;
     align-items: center;
     justify-content: flex-start;
-    gap: 10px;
+    background-size: cover;
+    background-position: center;
   }
 
   .photo-box {
-    position: relative;
+    position: static;
     width: 80%;
-    height: auto;
     aspect-ratio: 3 / 4;
-    top: auto;
-    left: auto;
-    margin-bottom: 20px;
+    height: auto;
+    margin-bottom: 10px;
   }
 
   .inputs {
-    position: relative;
+    position: static;
     width: 100%;
-    margin: 0;
-    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
     font-size: 4vw;
-    gap: 10px;
+    padding: 0 10px;
   }
 
   .inputs input {
@@ -271,10 +272,7 @@ button:hover {
     width: 100%;
   }
 
-  .input-fields label {
-    font-size: 1rem;
-  }
-
+  .input-fields label,
   .input-fields input,
   .input-fields span {
     font-size: 1rem;
@@ -283,7 +281,6 @@ button:hover {
 
   .buttons {
     flex-direction: column;
-    align-items: center;
     gap: 15px;
   }
 
