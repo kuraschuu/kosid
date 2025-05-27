@@ -45,12 +45,12 @@ body {
 }
 
 .card-front {
-  background-image: url('assets/id-card-front.PNG');
-  padding: 40px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  box-sizing: border-box;
+  align-items: center;
+  padding: 20px;
+  gap: 20px;
 }
 
 .card-back {
@@ -72,19 +72,10 @@ body {
 
 /* Form Overlay Styling */
 .inputs {
-  position: absolute;
-  top: 15%;
-  left: 40%;
-  width: 50%;
   display: flex;
   flex-direction: column;
+  flex: 1;
   gap: 10px;
-  color: #f0e9ca;
-  font-size: 1rem;
-  font-family: 'Cinzel', serif;
-  z-index: 2;
-  max-height: 60%;
-  overflow: auto;
 }
 
 .inputs input {
@@ -137,18 +128,12 @@ body {
 }
 
 .photo-box {
-  position: absolute;
-  top: 12%;
-  left: 6%;
-  width: 28%;
-  height: 60%;
-  border: 2px solid #dcd2b8;
-  background-color: rgba(255, 255, 255, 0.05);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
+  width: 160px;
+  height: 200px;
+  flex-shrink: 0;
+  margin-right: 20px;
 }
+
 
 .photo-box img,
 #photoPreview {
@@ -175,32 +160,21 @@ body {
     margin-bottom: 20px;
   }
 
-  .card-front {
-    flex-direction: row; /* Keep row layout to preserve alignment */
-    padding: 16px;
-    gap: 12px;
-    align-items: center;
-    justify-content: space-between;
-    background-size: cover;
-    background-position: center;
-  }
+ .card-front {
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
 
-  .photo-box {
-    /* Keep position absolute so it stays in place over card */
-    top: 12%;
-    left: 6%;
-    width: 28%;
-    height: 60%;
-  }
+ .photo-box {
+  width: 60%;
+  aspect-ratio: 3 / 4;
+  margin: 0 auto;
+}
 
-  .inputs {
-    top: 18%;
-    left: 38%;
-    width: 55%;
-    font-size: 1rem; /* use rem for consistent sizing */
-    max-height: 60%;
-    overflow: auto;
-  }
+.inputs {
+  width: 100%;
+}
 
   .inputs input {
     font-size: 1rem;
