@@ -69,21 +69,29 @@ body {
 }
 /* Form Overlay Styling */
 .inputs {
-  position: relative;  /* Changed from absolute */
-  margin-left: 35%;    /* Roughly same spacing but flexible */
-  margin-right: 5%;
-  color: #f0e9ca;
+  position: absolute;
+  top: 15%;             /* Adjust as needed to align inputs on card */
+  left: 40%;
+  width: 50%;
   display: flex;
   flex-direction: column;
-  font-size: 1rem;
   gap: 10px;
-  max-width: 60%;
+  color: #f0e9ca;
+  font-size: 0.9vw;
+  font-family: 'Cinzel', serif;
+  z-index: 2;
+}
+.inputs input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #f5f5dc;
+  color: #f5f5dc;
+  padding: 4px 2px;
+  font-size: 0.9em;
+  outline: none;
+  width: 100%;
 }
 
-.inputs input {
-  font-size: 0.9em;
-  padding: 2px;
-}
 
 .input-fields {
   display: flex;
@@ -179,12 +187,11 @@ body {
     height: auto;
     margin-bottom: 10px;
   }
-
-   .inputs {
-    top: 17%;
-    left: 37%;
+  .inputs {
+    top: 18%;
+    left: 38%;
     width: 55%;
-    font-size: 2.5vw; /* Scale with screen size */
+    font-size: 2.8vw;  /* Scale relative to screen */
   }
    .inputs input {
     font-size: 1rem;
