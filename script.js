@@ -25,23 +25,17 @@ document.getElementById('downloadBtn').addEventListener('click', () => {
   const card = document.querySelector('.card');
   const wasFlipped = card.classList.contains('flipped');
 
-  // Temporarily show the front side if flipped
-  if (wasFlipped) {
-    card.classList.remove('flipped');
-  }
+  // Clone the entire card
+  const clone = card.cloneNode(true);
+  clone.classList.remove('flipped'); // force it to show front side
 
-  const frontSide = card.querySelector('.card-front');
-  const clone = frontSide.cloneNode(true);
+  // Hide back side from the clone entirely
+  const back = clone.querySelector('.card-back');
+  if (back) back.style.display = 'none';
 
-  clone.style.position = 'fixed';
-  clone.style.top = '-9999px';
-  clone.style.left = '-9999px';
-  clone.style.transform = 'none';
-  clone.style.backfaceVisibility = 'visible';
-  clone.style.zIndex = '1000';
-
-  // Replace inputs with spans
-  const inputs = clone.querySelectorAll('input');
+  // Replace inputs with spans on the front side
+  const frontClone = clone.querySelector('.card-front');
+  const inputs = frontClone.querySelectorAll('input');
   inputs.forEach(input => {
     const span = document.createElement('span');
     span.textContent = input.value || input.placeholder;
@@ -56,29 +50,35 @@ document.getElementById('downloadBtn').addEventListener('click', () => {
     input.parentNode.replaceChild(span, input);
   });
 
-  // Keep uploaded image
-  const photo = clone.querySelector('#photoPreview');
-  if (photo && photo.src && photo.style.display !== 'none') {
+  // Keep uploaded photo
+  const photo = frontClone.querySelector('#photoPreview');
+  if (photo && photo.src) {
     photo.style.display = 'block';
-    const placeholder = clone.querySelector('#photoPlaceholder');
+    const placeholder = frontClone.querySelector('#photoPlaceholder');
     if (placeholder) placeholder.style.display = 'none';
   }
 
+  // Style and append the clone off-screen
+  clone.style.position = 'fixed';
+  clone.style.top = '-9999px';
+  clone.style.left = '-9999px';
+  clone.style.zIndex = '1000';
+  clone.style.transform = 'none';
   document.body.appendChild(clone);
 
   html2canvas(clone, {
     scale: 2,
     useCORS: true,
-    allowTaint: true,
     backgroundColor: null
   }).then(canvas => {
     const link = document.createElement('a');
     link.download = 'kingdom-of-science-id.png';
     link.href = canvas.toDataURL('image/png');
     link.click();
+
     document.body.removeChild(clone);
 
-    // Restore card flip state
+    // Restore flip state
     if (wasFlipped) {
       card.classList.add('flipped');
     }
