@@ -87,6 +87,9 @@ body {
   font-family: 'Cinzel', serif;
 }
 
+.hide {
+  display: none !important;
+}
 
 
 .photo-box {
