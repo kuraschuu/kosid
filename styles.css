@@ -180,16 +180,15 @@ body {
     margin-bottom: 10px;
   }
 
-  .inputs {
-    margin-left: 0;
-    max-width: 100%;
-    font-size: 3vw;
-    padding: 10px;
-    position: static;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 12px;
+   .inputs {
+    top: 17%;
+    left: 37%;
+    width: 55%;
+    font-size: 2.5vw; /* Scale with screen size */
+  }
+   .inputs input {
+    font-size: 1rem;
+    padding: 6px 4px;
   }
 
   .input-fields {
