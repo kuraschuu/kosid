@@ -22,50 +22,47 @@ document.getElementById('photoInput').addEventListener('change', function (event
 
 // Download card as PNG
 function downloadCard() {
-  const originalFront = document.getElementById('cardFront');
+  const card = document.querySelector('.card');
+  const front = document.querySelector('.card-front');
+  const back = document.querySelector('.card-back');
 
-  // Clone the front card content
-  const clone = originalFront.cloneNode(true);
-  clone.style.width = '800px';
-  clone.style.height = '450px';
-  clone.style.backgroundSize = 'cover';
-  clone.style.backgroundPosition = 'center';
-  clone.style.borderRadius = '12px';
-  clone.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.2)';
-  clone.style.display = 'flex';
-  clone.style.flexDirection = 'row';
-  clone.style.justifyContent = 'space-between';
-  clone.style.padding = '40px';
-  clone.style.boxSizing = 'border-box';
+  // Temporarily hide the back side
+  back.classList.add('hide');
+
+  // Ensure the card is not flipped
+  card.classList.remove('flipped');
+
+  // Clone only the front side
+  const clone = front.cloneNode(true);
   clone.style.position = 'fixed';
-  clone.style.top = '-9999px';
-  clone.style.left = '-9999px';
-  clone.style.zIndex = '1000';
+  clone.style.top = '-10000px';
+  clone.style.left = '-10000px';
   clone.style.transform = 'none';
   clone.style.backfaceVisibility = 'visible';
+  clone.style.zIndex = '9999';
 
-  // Replace inputs with spans showing their values
-  const inputs = clone.querySelectorAll('input');
-  inputs.forEach(input => {
-    const span = document.createElement('span');
-    span.textContent = input.value || input.placeholder;
-    span.style.display = 'block';
-    span.style.color = '#f5f5dc';
-    span.style.borderBottom = '1px solid #f0e9ca';
-    span.style.marginBottom = '16px';
-    span.style.fontFamily = "'Cinzel', serif";
-    input.parentNode.replaceChild(span, input);
-  });
-
+  // Add clone to document
   document.body.appendChild(clone);
 
-  domtoimage.toPng(clone)
-    .then((dataUrl) => {
-      downloadURI(dataUrl, 'kingdom-of-science-id.png');
-      document.body.removeChild(clone);
-    })
-    .catch((error) => {
-      console.error('Download failed:', error);
-      document.body.removeChild(clone);
-    });
+  // Capture with dom-to-image
+  domtoimage.toPng(clone).then((dataUrl) => {
+    downloadURI(dataUrl, 'kingdom-of-science-id.png');
+
+    // Cleanup
+    document.body.removeChild(clone);
+    back.classList.remove('hide'); // restore visibility
+  }).catch((error) => {
+    console.error('Download failed:', error);
+    document.body.removeChild(clone);
+    back.classList.remove('hide');
+  });
+}
+
+function downloadURI(uri, name) {
+  const link = document.createElement('a');
+  link.download = name;
+  link.href = uri;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
 }
