@@ -21,61 +21,51 @@ document.getElementById('photoInput').addEventListener('change', function (event
 });
 
 // Download card as PNG
-let isFlipped = false;
-
-/*-- Download Card ------*/
-
 function downloadCard() {
-	let card = document.getElementById('districtCard');
-	let cardFront = document.getElementById('cardFront');
-	let cardBack = document.getElementById('cardBack');
+  const originalFront = document.getElementById('cardFront');
 
-	let scale = 2;
+  // Clone the front card content
+  const clone = originalFront.cloneNode(true);
+  clone.style.width = '800px';
+  clone.style.height = '450px';
+  clone.style.backgroundSize = 'cover';
+  clone.style.backgroundPosition = 'center';
+  clone.style.borderRadius = '12px';
+  clone.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.2)';
+  clone.style.display = 'flex';
+  clone.style.flexDirection = 'row';
+  clone.style.justifyContent = 'space-between';
+  clone.style.padding = '40px';
+  clone.style.boxSizing = 'border-box';
+  clone.style.position = 'fixed';
+  clone.style.top = '-9999px';
+  clone.style.left = '-9999px';
+  clone.style.zIndex = '1000';
+  clone.style.transform = 'none';
+  clone.style.backfaceVisibility = 'visible';
 
-	if (isFlipped) {
-		cardFront.classList.add('hide');
-		cardBack.style.transform = 'rotateY(0)';
-	} else {
-		cardBack.classList.add('hide');
-	}
+  // Replace inputs with spans showing their values
+  const inputs = clone.querySelectorAll('input');
+  inputs.forEach(input => {
+    const span = document.createElement('span');
+    span.textContent = input.value || input.placeholder;
+    span.style.display = 'block';
+    span.style.color = '#f5f5dc';
+    span.style.borderBottom = '1px solid #f0e9ca';
+    span.style.marginBottom = '16px';
+    span.style.fontFamily = "'Cinzel', serif";
+    input.parentNode.replaceChild(span, input);
+  });
 
-	domtoimage
-		.toPng(card, {
-			width: card.clientWidth * scale,
-			height: card.clientHeight * scale,
-			style: {
-				transform: 'scale(' + scale + ')',
-				transformOrigin: 'top left',
-			},
-		})
-		.then((dataUrl) => {
-			domtoimage
-				.toPng(card, {
-					width: card.clientWidth * scale,
-					height: card.clientHeight * scale,
-					style: {
-						transform: 'scale(' + scale + ')',
-						transformOrigin: 'top left',
-					},
-				})
-				.then((dataUrl2) => {
-					var img = new Image();
-					img.src = dataUrl2;
-					downloadURI(dataUrl2, 'Loona-Island-Card.png');
-					cardFront.classList.remove('hide');
-					cardBack.style.transform = 'rotateY(180deg)';
-					cardBack.classList.remove('hide');
-					card.style.backgroundImage = 'none';
-				});
-		});
-}
+  document.body.appendChild(clone);
 
-function downloadURI(uri, name) {
-	var link = document.createElement('a');
-	link.download = name;
-	link.href = uri;
-	document.body.appendChild(link);
-	link.click();
-	document.body.removeChild(link);
-	delete link;
+  domtoimage.toPng(clone)
+    .then((dataUrl) => {
+      downloadURI(dataUrl, 'kingdom-of-science-id.png');
+      document.body.removeChild(clone);
+    })
+    .catch((error) => {
+      console.error('Download failed:', error);
+      document.body.removeChild(clone);
+    });
 }
