@@ -11,15 +11,20 @@ body {
 }
 
 .card-container {
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+  aspect-ratio: 16 / 9;
   perspective: 1000px;
+  margin-bottom: 20px;
 }
 
 .card {
-  width: 800px;
-  height: 450px;
+  width: 100%;
+  height: 100%;
   position: relative;
-  transform-style: preserve-3d;
   transition: transform 0.8s;
+  transform-style: preserve-3d;
 }
 
 .card.flipped {
@@ -51,8 +56,34 @@ body {
   background-image: url('assets/id-card back.PNG');
   transform: rotateY(180deg);
 }
-
+.card-side {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+  background-size: cover;
+  background-position: center;
+}
 /* Form Overlay Styling */
+.inputs {
+  position: absolute;
+  top: 12%;
+  left: 40%;
+  right: 5%;
+  color: #f0e9ca;
+  display: flex;
+  flex-direction: column;
+  font-size: 1vw;
+  gap: 0.8vw;
+}
+.inputs input {
+  font-size: 0.9em;
+  padding: 2px;
+}
+
 .input-fields {
   display: flex;
   flex-direction: column;
@@ -93,24 +124,54 @@ body {
 
 
 .photo-box {
-  width: 240px;
-  height: 300px;
-  border: 2px solid #f5f5dc;
-  background: rgba(0, 0, 0, 0.2);
-  color: #f5f5dc;
+  position: absolute;
+  top: 12%;
+  left: 6%;
+  width: 28%;
+  height: 60%;
+  border: 2px solid #dcd2b8;
+  background-color: rgba(255,255,255,0.05);
   display: flex;
   align-items: center;
   justify-content: center;
-  text-align: center;
-  font-family: 'Cinzel Decorative', serif;
-  font-size: 1.2rem;
+  overflow: hidden;
 }
-
+.photo-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 #photoPreview {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: none;
+}
+@media (max-width: 600px) {
+  .inputs {
+    font-size: 3vw;
+    left: 38%;
+    right: 5%;
+    gap: 2vw;
+  }
+
+  .photo-box {
+    top: 14%;
+    left: 6%;
+    width: 35%;
+    height: 55%;
+  }
+
+  .controls {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    text-align: center;
+  }
+
+  .controls button {
+    font-size: 16px;
+  }
 }
 
 /* Buttons below the card */
