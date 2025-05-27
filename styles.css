@@ -1,4 +1,9 @@
 /* styles.css */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 
 body {
   font-family: 'Cinzel', serif;
@@ -45,6 +50,7 @@ body {
 }
 
 .card-front {
+  background-image: url('assets/id-card-front.PNG'); /* RE-ADD THIS */
   display: flex;
   flex-direction: row;
   justify-content: space-between;
