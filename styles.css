@@ -220,3 +220,82 @@ button:hover {
 }
  
 }
+@media (max-width: 600px) {
+  body {
+    flex-direction: column;
+    padding: 20px 10px;
+    align-items: stretch;
+    height: auto;
+  }
+
+  .card-container {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    margin-bottom: 20px;
+  }
+
+  .card-front {
+    flex-direction: column;
+    padding: 20px;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+  }
+
+  .photo-box {
+    position: relative;
+    width: 80%;
+    height: auto;
+    aspect-ratio: 3 / 4;
+    top: auto;
+    left: auto;
+    margin-bottom: 20px;
+  }
+
+  .inputs {
+    position: relative;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-size: 4vw;
+    gap: 10px;
+  }
+
+  .inputs input {
+    font-size: 1rem;
+    padding: 6px 4px;
+  }
+
+  .input-fields {
+    width: 100%;
+  }
+
+  .input-fields label {
+    font-size: 1rem;
+  }
+
+  .input-fields input,
+  .input-fields span {
+    font-size: 1rem;
+    width: 100%;
+  }
+
+  .buttons {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+
+  button {
+    width: 80%;
+    font-size: 1rem;
+    padding: 10px;
+  }
+
+  .controls {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+}
