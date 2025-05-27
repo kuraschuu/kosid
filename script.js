@@ -22,51 +22,57 @@ document.getElementById('photoInput').addEventListener('change', function (event
 
 // Download card as PNG
 document.getElementById('downloadBtn').addEventListener('click', () => {
-  const card = document.querySelector('.card');
-  const wasFlipped = card.classList.contains('flipped');
+  const originalCard = document.querySelector('.card');
+  const front = originalCard.querySelector('.card-front');
 
-  // Clone the entire card
-  const clone = card.cloneNode(true);
-  clone.classList.remove('flipped'); // force it to show front side
+  // Create a clean container for the front
+  const cleanCard = document.createElement('div');
+  cleanCard.style.width = '800px';
+  cleanCard.style.height = '450px';
+  cleanCard.style.backgroundImage = getComputedStyle(front).backgroundImage;
+  cleanCard.style.backgroundSize = 'cover';
+  cleanCard.style.backgroundPosition = 'center';
+  cleanCard.style.borderRadius = '12px';
+  cleanCard.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.2)';
+  cleanCard.style.display = 'flex';
+  cleanCard.style.flexDirection = 'row';
+  cleanCard.style.justifyContent = 'space-between';
+  cleanCard.style.padding = '40px';
+  cleanCard.style.boxSizing = 'border-box';
+  cleanCard.style.position = 'fixed';
+  cleanCard.style.top = '-9999px';
+  cleanCard.style.left = '-9999px';
+  cleanCard.style.zIndex = '1000';
 
-  // Hide back side from the clone entirely
-  const back = clone.querySelector('.card-back');
-  if (back) back.style.display = 'none';
-
-  // Replace inputs with spans on the front side
-  const frontClone = clone.querySelector('.card-front');
-  const inputs = frontClone.querySelectorAll('input');
-  inputs.forEach(input => {
+  // Clone input fields as spans
+  const inputsContainer = front.querySelector('.input-fields');
+  const cleanInputs = inputsContainer.cloneNode(true);
+  cleanInputs.querySelectorAll('input').forEach(input => {
     const span = document.createElement('span');
     span.textContent = input.value || input.placeholder;
-    span.style.display = 'inline-block';
-    span.style.width = input.offsetWidth + 'px';
-    span.style.height = input.offsetHeight + 'px';
-    span.style.borderBottom = getComputedStyle(input).borderBottom;
-    span.style.fontFamily = getComputedStyle(input).fontFamily;
-    span.style.fontSize = getComputedStyle(input).fontSize;
-    span.style.color = getComputedStyle(input).color;
-    span.style.lineHeight = input.offsetHeight + 'px';
+    span.style.display = 'block';
+    span.style.borderBottom = '1px solid #f0e9ca';
+    span.style.marginBottom = '20px';
+    span.style.color = '#f5f5dc';
+    span.style.fontFamily = "'Cinzel', serif";
+    span.style.fontSize = '1rem';
     input.parentNode.replaceChild(span, input);
   });
 
-  // Keep uploaded photo
-  const photo = frontClone.querySelector('#photoPreview');
-  if (photo && photo.src) {
-    photo.style.display = 'block';
-    const placeholder = frontClone.querySelector('#photoPlaceholder');
+  // Clone the photo box
+  const photoBox = front.querySelector('.photo-box').cloneNode(true);
+  const photoPreview = photoBox.querySelector('#photoPreview');
+  const placeholder = photoBox.querySelector('#photoPlaceholder');
+  if (photoPreview && photoPreview.src) {
+    photoPreview.style.display = 'block';
     if (placeholder) placeholder.style.display = 'none';
   }
 
-  // Style and append the clone off-screen
-  clone.style.position = 'fixed';
-  clone.style.top = '-9999px';
-  clone.style.left = '-9999px';
-  clone.style.zIndex = '1000';
-  clone.style.transform = 'none';
-  document.body.appendChild(clone);
+  cleanCard.appendChild(cleanInputs);
+  cleanCard.appendChild(photoBox);
+  document.body.appendChild(cleanCard);
 
-  html2canvas(clone, {
+  html2canvas(cleanCard, {
     scale: 2,
     useCORS: true,
     backgroundColor: null
@@ -76,11 +82,6 @@ document.getElementById('downloadBtn').addEventListener('click', () => {
     link.href = canvas.toDataURL('image/png');
     link.click();
 
-    document.body.removeChild(clone);
-
-    // Restore flip state
-    if (wasFlipped) {
-      card.classList.add('flipped');
-    }
+    document.body.removeChild(cleanCard);
   });
 });
